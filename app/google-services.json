@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "389366463217",
+    "firebase_url": "https://jkdjdgjglkklkljldgjlkdgjlk-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "jkdjdgjglkklkljldgjlkdgjlk",
+    "storage_bucket": "jkdjdgjglkklkljldgjlkdgjlk.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389366463217:android:36a9981f8afe3a9d8a4750",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrU-x1vbKsisYaFjFE6NbvO3FuyEZhqG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389366463217:android:5652058de1954c1b8a4750",
+        "android_client_info": {
+          "package_name": "com.ort.tivon.ch11"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrU-x1vbKsisYaFjFE6NbvO3FuyEZhqG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

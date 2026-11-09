@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- always: מופיע תמיד בסרגל -->
+    <item android:id="@+id/action_add" android:title="@string/add"
+        android:icon="@drawable/ic_add" app:showAsAction="always"/>
+    <!-- ifRoom: מופיע בסרגל אם יש מקום, אחרת בתוך שלוש הנקודות -->
+    <item android:id="@+id/action_reset" android:title="@string/reset"
+        android:icon="@drawable/ic_reset" app:showAsAction="ifRoom"/>
+    <!-- never: מופיע רק בתוך שלוש הנקודות -->
+    <item android:id="@+id/action_about" android:title="@string/about"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_list"
+        android:title="@string/my_cards"
+        app:showAsAction="never" />
+</menu>

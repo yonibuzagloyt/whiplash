@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">דוגמת תפריט</string>
+    <string name="add">דוגמה</string>
+    <string name="reset">איפוס</string>
+    <string name="about">אודות</string>
+    <string name="my_cards">הכרטיסים שלי</string>
+    <string name="new_card">➕ כרטיס חדש</string>
+    <string name="cloud_loading">טוען מהענן...</string>
+    <string name="edit">ערוך</string>
+    <string name="n_18_10_26_n">נכתב על ידי יוני בוזגלו\nלעבודה בית עד 18.10.26\nכיתה יב · אורט טבעון</string>
+    <string name="about_title">כרטיס ביקור</string>
+</resources>

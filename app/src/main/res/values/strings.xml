@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">example menu</string>
+    <string name="add">example</string>
+    <string name="reset">reset</string>
+    <string name="about">about</string>
+    <string name="my_cards">my cards</string>
+    <string name="new_card">+ create card</string>
+    <string name="cloud_loading">loading...</string>
+    <string name="edit">edit</string>
+    <string name="n_18_10_26_n">edited by yoni buzaglo for\n
+מטלה סיכום - Firebase\n
+    ort tivon 12th grade</string>
+    <string name="about_title">כרטיס ביקור</string>
+</resources>
