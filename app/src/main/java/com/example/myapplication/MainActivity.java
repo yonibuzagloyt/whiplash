@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     public static final String KEY_NAME = "name";
@@ -149,9 +150,12 @@ public class MainActivity extends AppCompatActivity {
         if (editKey == null) {
             // ===== הוספה (Create) =====
 
-            // TODO 1: בקשו מ-ref מפתח חדש וייחודי, ושמרו אותו במשתנה String בשם key
+            // 1. מייצרים מפתח חדש. שימו לב: עדיין לא נכתב שום דבר למסד!
+            String key = ref.push().getKey();
 
-            // TODO 2: שמרו את המפתח גם בתוך העצם card
+            // 3. כותבים אותו לצומת שהמפתח מצביע עליו
+            ref.child(key).setValue(card);
+            card.setKey(key);
 
             // TODO 3: כתבו את card לצומת-הילד key, וחברו שני מאזינים:
             //         הצלחה → Toast "נשמר בענן", אחר כך clearForm(), ואחר כך openCard(card)
