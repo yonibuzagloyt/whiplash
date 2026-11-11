@@ -5,10 +5,26 @@
     <string name="about">about</string>
     <string name="my_cards">my cards</string>
     <string name="new_card">+ create card</string>
-    <string name="cloud_loading">loading...</string>
+    <string name="cloud_loading">loading…</string>
     <string name="edit">edit</string>
     <string name="n_18_10_26_n">edited by yoni buzaglo for\n
 מטלה סיכום - Firebase\n
     ort tivon 12th grade</string>
-    <string name="about_title">כרטיס ביקור</string>
+    <string name="about_title">Business card</string>
+    <string name="error_firebase">an error occurred while trying to save to firebase.\n</string>
+    <string name="success_firebase">successfully saved to firebase!</string>
+    <string name="website_example">idontknow.com</string>
+    <string name="create_a_card">create card!</string>
+    <string name="website_title">website:</string>
+    <string name="phonenumber_example">067-67676767</string>
+    <string name="phone_title">phone number:</string>
+    <string name="job_example">for example: android instructor</string>
+    <string name="job_title">job/role:</string>
+    <string name="title">business card</string>
+    <string name="name_title">full name:</string>
+    <string name="name_example">for example: john jollyton</string>
+    <string name="call_button">call</string>
+    <string name="openweb_button">open website</string>
+    <string name="share_button">share</string>
+    <string name="back_button">back to registration</string>
 </resources>

@@ -30,55 +30,67 @@ public class MainActivity extends AppCompatActivity {
     public EditText editJob;
     public EditText editPhone;
     public EditText editWebsite;
-
+    public Button btnMain;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EditText editName = findViewById(R.id.etName);
-        EditText editJob = findViewById(R.id.etTitle);
-        EditText editPhone = findViewById(R.id.etJob);
-        EditText editWebsite = findViewById(R.id.etWebsite);
-        Button btnMain = findViewById(R.id.etDueDate);
-        Button btnFill = findViewById(R.id.btnCancel);
-        Button btnGo = findViewById(R.id.btnSave); // אודות
-        btnGo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // ★ מסר מפורש: אנחנו מציינים בדיוק מי היעד
-                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-                startActivity(intent);
+        editName = findViewById(R.id.etName);
+        editJob = findViewById(R.id.etTitle);
+        editPhone = findViewById(R.id.etJob);
+        editWebsite = findViewById(R.id.etWebsite);
+        btnMain = findViewById(R.id.etDueDate);
+//        Button btnFill = findViewById(R.id.btnCancel);
+//        Button btnGo = findViewById(R.id.btnSave); // אודות
+        // בסוף onCreate, אחרי כל ה-findViewById:
+        editKey = getIntent().getStringExtra("key");
+        if (editKey != null)
+        {
+            editName.setText(getIntent().getStringExtra("name"));
+            editJob.setText(getIntent().getStringExtra("job"));
+            editWebsite.setText(getIntent().getStringExtra("website"));
+            editPhone.setText(getIntent().getStringExtra("phone"));
+            btnMain.setText("שמור שינויים");
+            setTitle("עריכת כרטיס");
             }
-        });
+//        btnGo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // ★ מסר מפורש: אנחנו מציינים בדיוק מי היעד
+//                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         btnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = editName.getText().toString().trim();
-                if (name.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "נא להזין שם", Toast.LENGTH_SHORT).show();
-                    return;                         // לא עוברים מסך
-                }
-                Intent intent = new Intent(MainActivity.this, CardActivity.class);
-                intent.putExtra(KEY_NAME, name);
-                String job = editJob.getText().toString().trim();
-                intent.putExtra(KEY_JOB, job);
-                String phone = editPhone.getText().toString().trim();
-                intent.putExtra(KEY_PHONE, phone);
-                String website = editWebsite.getText().toString().trim();
-                intent.putExtra(KEY_WEBSITE, website);
-                startActivity(intent);
+//                String name = editName.getText().toString().trim();
+//                if (name.isEmpty()) {
+//                    Toast.makeText(MainActivity.this, "נא להזין שם", Toast.LENGTH_SHORT).show();
+//                    return;                         // לא עוברים מסך
+//                }
+//                Intent intent = new Intent(MainActivity.this, CardActivity.class);
+//                intent.putExtra(KEY_NAME, name);
+//                String job = editJob.getText().toString().trim();
+//                intent.putExtra(KEY_JOB, job);
+//                String phone = editPhone.getText().toString().trim();
+//                intent.putExtra(KEY_PHONE, phone);
+//                String website = editWebsite.getText().toString().trim();
+//                intent.putExtra(KEY_WEBSITE, website);
+//                startActivity(intent);
+                saveCard();
             }
         });
-        btnFill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editName.setText("שלו לוי");
-                editJob.setText("מתכנת אנדרויד");
-                editPhone.setText("054-7888321");
-                editWebsite.setText("indeed.com");
-            }
-        });
+//        btnFill.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                editName.setText("שלו לוי");
+//                editJob.setText("מתכנת אנדרויד");
+//                editPhone.setText("054-7888321");
+//                editWebsite.setText("indeed.com");
+//            }
+//        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,28 +160,39 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference ref = CardsDb.cards(this);
 
         if (editKey == null) {
-            // ===== הוספה (Create) =====
-
-            // 1. מייצרים מפתח חדש. שימו לב: עדיין לא נכתב שום דבר למסד!
             String key = ref.push().getKey();
-
-            // 3. כותבים אותו לצומת שהמפתח מצביע עליו
-            ref.child(key).setValue(card);
             card.setKey(key);
-
-            // TODO 3: כתבו את card לצומת-הילד key, וחברו שני מאזינים:
-            //         הצלחה → Toast "נשמר בענן", אחר כך clearForm(), ואחר כך openCard(card)
-            //         כישלון → Toast עם "השמירה נכשלה: " + e.getMessage()
+            ref.child(key).setValue(card).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(MainActivity.this, getString(R.string.success_firebase), Toast.LENGTH_SHORT).show();
+                            clearForm();
+                            openCard(card);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MainActivity.this, getString(R.string.error_firebase), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
         } else {
-            // בסוף onCreate, אחרי כל ה-findViewById:
-            editKey = getIntent().getStringExtra("key");
-            if (editKey != null) {
-                // TODO 11: פתחו אותנו מ"ערוך". מלאו את ארבעת השדות בערכים שהגיעו ב-Intent,
-                //          שנו את הכיתוב של btnCreate ל"שמור שינויים", ואת הכותרת ל"עריכת כרטיס"
+            ref.child(editKey).setValue(card)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(MainActivity.this, getString(R.string.success_firebase), Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MainActivity.this, getString(R.string.error_firebase), Toast.LENGTH_SHORT).show();
+                        }
+                    });
             }
         }
-    }
 
     private void openCard(Card c) {
         Intent intent = new Intent(this, CardActivity.class);
@@ -177,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("name", c.getName());
         intent.putExtra("job", c.getJob());
         intent.putExtra("phone", c.getPhone());
-        intent.putExtra("site", c.getSite());
+        intent.putExtra("website", c.getSite());
         startActivity(intent);
     }
 

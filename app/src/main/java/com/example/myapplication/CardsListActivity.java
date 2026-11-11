@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -64,14 +65,21 @@ public class CardsListActivity extends AppCompatActivity {
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // TODO 4: רוקנו את הרשימה cards (למה? ראו את הרמזים)
-
-                // TODO 5: עברו בלולאה על כל הילדים של snapshot. לכל ילד:
-                //         הפכו אותו לעצם Card, שמרו בעצם את המפתח של הילד,
-                //         והוסיפו את העצם לרשימה cards
-
-                // TODO 6: אמרו למתאם שהנתונים השתנו,
-                //         וכתבו ב-tvCount כמה כרטיסים יש
+                cards.clear();
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Card c = child.getValue(Card.class);
+                    if (c != null) {
+                        c.setKey(child.getKey());
+                        cards.add(c);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                if (cards.size() > 0) {
+                    tvCount.setText(cards.size() + " כרטיסים בענן");
+                }
+                else {
+                    tvCount.setText("אין עדיין כרטיסים. צרו את הראשון!");
+                }
             }
 
             @Override
@@ -81,24 +89,30 @@ public class CardsListActivity extends AppCompatActivity {
             }
         };
 
-        // TODO 7: הירשמו עם listener לשינויים בצומת ref
+        ref.addValueEventListener(listener);
 
         lvCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO 9: קחו מהרשימה cards את הכרטיס שעליו לחצו (לפי position),
-                //         בנו Intent ל-CardActivity עם 5 Extras: "key", "name", "job", "phone", "site",
-                //         ופתחו את המסך
+                Card c = cards.get(position);
+                Intent intent = new Intent(CardsListActivity.this, CardActivity.class);
+                intent.putExtra("key", c.getKey());
+                intent.putExtra("name", c.getName());
+                intent.putExtra("job", c.getJob());
+                intent.putExtra("phone", c.getPhone());
+                intent.putExtra("website", c.getSite());
+                startActivity(intent);
             }
         });
         lvCards.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO 13: קראו ל-askDelete עם הכרטיס שבמקום position,
-                //          והחזירו ערך שאומר "טיפלתי בלחיצה" (כדי שלא תיפתח גם לחיצה רגילה)
+                askDelete(cards.get(position));
+                return true;
             }
         });
     }
+
     // ===== מחיקה (Delete) =====
     private void askDelete(final Card c) {
         new AlertDialog.Builder(this)
@@ -107,17 +121,24 @@ public class CardsListActivity extends AppCompatActivity {
                 .setPositiveButton("מחק", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO 14: מחקו מהענן את הצומת של הכרטיס c (לפי המפתח שלו),
-                        //          ובהצלחה הציגו Toast "נמחק".
-                        //          אל תמחקו בעצמכם מהרשימה cards. מי יעשה את זה?
+                        ref.child(c.getKey()).removeValue()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(CardsListActivity.this, "successfully deleted!", Toast.LENGTH_LONG).show();
+                                    }
+                                });
                     }
                 })
                 .setNegativeButton("ביטול", null)
                 .show();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // TODO 8: אם ref ו-listener לא null, בטלו את ההרשמה של listener
+        if (ref != null && listener != null) {
+            ref.removeEventListener(listener);
+        }
     }
 }

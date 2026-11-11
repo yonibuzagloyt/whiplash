@@ -5,8 +5,24 @@
     <string name="about">אודות</string>
     <string name="my_cards">הכרטיסים שלי</string>
     <string name="new_card">➕ כרטיס חדש</string>
-    <string name="cloud_loading">טוען מהענן...</string>
+    <string name="cloud_loading">טוען מהענן…</string>
     <string name="edit">ערוך</string>
     <string name="n_18_10_26_n">נכתב על ידי יוני בוזגלו\nלעבודה בית עד 18.10.26\nכיתה יב · אורט טבעון</string>
     <string name="about_title">כרטיס ביקור</string>
+    <string name="error_firebase">נוצרה שגיאה בזמן שמירה לפיירביס.\n</string>
+    <string name="success_firebase">נשמר בהצלחה!</string>
+    <string name="create_a_card">צור כרטיס!!</string>
+    <string name="website_example">idontknow.com</string>
+    <string name="website_title">אתר:</string>
+    <string name="phonenumber_example">067-67676767</string>
+    <string name="phone_title">טלפון:</string>
+    <string name="job_example">למשל: מפתחת אנדרואיד</string>
+    <string name="job_title">תפקיד:</string>
+    <string name="title">כרטיס ביקור</string>
+    <string name="name_title">שם מלא:</string>
+    <string name="name_example">למשל: לילי נור גחלילי</string>
+    <string name="call_button">חייג</string>
+    <string name="openweb_button">פתח אתר</string>
+    <string name="share_button">שתף</string>
+    <string name="back_button">חזרה לרשימה</string>
 </resources>
