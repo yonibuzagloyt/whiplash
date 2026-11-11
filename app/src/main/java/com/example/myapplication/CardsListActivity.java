@@ -38,7 +38,7 @@ public class CardsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_list);
-        setTitle("הכרטיסים שלי");
+        setTitle(getString(R.string.my_cards));
 
         lvCards = findViewById(R.id.lvCards);
         tvCount = findViewById(R.id.tvCount);
@@ -56,7 +56,7 @@ public class CardsListActivity extends AppCompatActivity {
         lvCards.setAdapter(adapter);
 
         if (!FirebaseConfig.isConfigured()) {
-            tvCount.setText("חסרים ערכים ב-FirebaseConfig.java");
+            tvCount.setText(R.string.firebaseconfig_java);
             return;
         }
         ref = CardsDb.cards(this);
@@ -75,17 +75,17 @@ public class CardsListActivity extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
                 if (cards.size() > 0) {
-                    tvCount.setText(cards.size() + " כרטיסים בענן");
+                    tvCount.setText(getString(R.string.cards_in_the_cloud)+ cards.size());
                 }
                 else {
-                    tvCount.setText("אין עדיין כרטיסים. צרו את הראשון!");
+                    tvCount.setText(R.string.no_cards);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(CardsListActivity.this,
-                        "הקריאה נכשלה: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                        getString(R.string.failed_to_read) + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         };
 
@@ -116,21 +116,21 @@ public class CardsListActivity extends AppCompatActivity {
     // ===== מחיקה (Delete) =====
     private void askDelete(final Card c) {
         new AlertDialog.Builder(this)
-                .setTitle("מחיקת כרטיס")
-                .setMessage("למחוק את הכרטיס של " + c.getName() + "?")
-                .setPositiveButton("מחק", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.card_deletion)
+                .setMessage(getString(R.string.card_del) + c.getName() + "?")
+                .setPositiveButton(R.string.del_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ref.child(c.getKey()).removeValue()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Toast.makeText(CardsListActivity.this, "successfully deleted!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CardsListActivity.this, R.string.successfully_deleted, Toast.LENGTH_LONG).show();
                                     }
                                 });
                     }
                 })
-                .setNegativeButton("ביטול", null)
+                .setNegativeButton(R.string.cancel_button, null)
                 .show();
     }
 

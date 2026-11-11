@@ -13,10 +13,8 @@
     <string name="about_title">Business card</string>
     <string name="error_firebase">an error occurred while trying to save to firebase.\n</string>
     <string name="success_firebase">successfully saved to firebase!</string>
-    <string name="website_example">idontknow.com</string>
     <string name="create_a_card">create card!</string>
     <string name="website_title">website:</string>
-    <string name="phonenumber_example">067-67676767</string>
     <string name="phone_title">phone number:</string>
     <string name="job_example">for example: android instructor</string>
     <string name="job_title">job/role:</string>
@@ -27,4 +25,22 @@
     <string name="openweb_button">open website</string>
     <string name="share_button">share</string>
     <string name="back_button">back to registration</string>
+    <string name="phone_error">please put in a phone number.</string>
+    <string name="web_error">please put in a website.</string>
+    <string name="no_right_app">no supported app can open this.</string>
+    <string name="share_with">Share Card With..</string>
+    <string name="cards_in_the_cloud">"Cards Saved: "</string>
+    <string name="no_cards">You have no cards. Why not create the first one?</string>
+    <string name="failed_to_read">"failed to read, "</string>
+    <string name="card_deletion">Card Deletion</string>
+    <string name="card_del">"are you sure you want to delete the business card that belongs to "</string>
+    <string name="del_button">delete</string>
+    <string name="successfully_deleted">successfully deleted!</string>
+    <string name="cancel_button">cancel.</string>
+    <string name="firebaseconfig_java">FirebaseConfig.java is missing values.</string>
+    <string name="must_fill_name">Please fill in a name!</string>
+    <string name="save_changes">SAVE CHANGES</string>
+    <string name="edit_card">Edit Card…</string>
+    <string name="name_example2">Gordon Ramsey</string>
+    <string name="role_example">Chef</string>
 </resources>

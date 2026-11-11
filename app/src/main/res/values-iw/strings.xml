@@ -12,9 +12,7 @@
     <string name="error_firebase">נוצרה שגיאה בזמן שמירה לפיירביס.\n</string>
     <string name="success_firebase">נשמר בהצלחה!</string>
     <string name="create_a_card">צור כרטיס!!</string>
-    <string name="website_example">idontknow.com</string>
     <string name="website_title">אתר:</string>
-    <string name="phonenumber_example">067-67676767</string>
     <string name="phone_title">טלפון:</string>
     <string name="job_example">למשל: מפתחת אנדרואיד</string>
     <string name="job_title">תפקיד:</string>
@@ -25,4 +23,22 @@
     <string name="openweb_button">פתח אתר</string>
     <string name="share_button">שתף</string>
     <string name="back_button">חזרה לרשימה</string>
+    <string name="phone_error">בבקשה תשים מספר טלפון.</string>
+    <string name="web_error">בבקשה תשים כתובת אתר.</string>
+    <string name="no_right_app">אין אפליקציה מתאימה.</string>
+    <string name="share_with">שתף כרטיס עם..</string>
+    <string name="firebaseconfig_java">חסרים ערכים ב-FirebaseConfig.java</string>
+    <string name="cards_in_the_cloud">" כרטיסים בענן"</string>
+    <string name="no_cards">אין עדיין כרטיסים. צרו את הראשון!</string>
+    <string name="failed_to_read">"הקריאה נכשלה: "</string>
+    <string name="card_deletion">מחיקת כרטיס</string>
+    <string name="successfully_deleted">נמחק בהצלחה!</string>
+    <string name="cancel_button">ביטול</string>
+    <string name="card_del">"למחוק את הכרטיס של "</string>
+    <string name="del_button">מחק</string>
+    <string name="must_fill_name">חובה למלא שם</string>
+    <string name="save_changes">שמור שינויים</string>
+    <string name="edit_card">עריכת כרטיס</string>
+    <string name="name_example2">שלו לוי</string>
+    <string name="role_example">מתכנת אנדרויד</string>
 </resources>

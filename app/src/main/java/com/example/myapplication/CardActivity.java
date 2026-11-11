@@ -37,7 +37,7 @@ public class CardActivity extends AppCompatActivity {
         TextView tvJob = findViewById(R.id.tvJob);
         tvJob.setHint(job);
         TextView tvOther = findViewById(R.id.tvOther);
-        tvOther.setText("טלפון: " + phone + "\n" + website);
+        tvOther.setText(getString(R.string.phone_title) + " " + phone + "\n" + website);
         Button btnCall = findViewById(R.id.btnCall);
         Button btnWeb = findViewById(R.id.btnWeb);
         Button btnShare = findViewById(R.id.btnShare);
@@ -49,13 +49,13 @@ public class CardActivity extends AppCompatActivity {
                 {
                     if (phone == null)
                     {
-                        Toast.makeText(CardActivity.this, "בבקשה תכניס מספר טלפון.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CardActivity.this, getString(R.string.phone_error), Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
                         if (phone.isBlank())
                         {
-                            Toast.makeText(CardActivity.this, "בבקשה תכניס מספר טלפון.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CardActivity.this, getString(R.string.phone_error), Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -66,7 +66,7 @@ public class CardActivity extends AppCompatActivity {
                 }
                 catch (Exception ActivityNotFoundException)
                 {
-                    Toast.makeText(CardActivity.this, "אין אפליקציה מתאימה.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
                     return;                         // לא עוברים מסך
                 }
             }
@@ -79,7 +79,7 @@ public class CardActivity extends AppCompatActivity {
                     if (website != null) {
                         if (website.isBlank())
                         {
-                            Toast.makeText(CardActivity.this, "בבקשה תכניס אתר.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CardActivity.this, getString(R.string.web_error), Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -94,12 +94,12 @@ public class CardActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(CardActivity.this, "בבקשה תכניס אתר.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CardActivity.this, getString(R.string.web_error), Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch (Exception ActivityNotFoundException)
                 {
-                    Toast.makeText(CardActivity.this, "אין אפליקציה מתאימה.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
                     return;                         // לא עוברים מסך
                 }
             }
@@ -112,11 +112,11 @@ public class CardActivity extends AppCompatActivity {
                     Intent share = new Intent(Intent.ACTION_SEND);
                     share.setType("text/plain");
                     share.putExtra(Intent.EXTRA_TEXT, name + "\n" + job + "\n" + phone + "\n" + website);
-                    startActivity(Intent.createChooser(share, "שתף כרטיס עם…"));
+                    startActivity(Intent.createChooser(share, getString(R.string.share_with)));
                 }
                 catch (Exception ActivityNotFoundException)
                 {
-                    Toast.makeText(CardActivity.this, "אין אפליקציה מתאימה.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
                     return;                         // לא עוברים מסך
                 }
             }

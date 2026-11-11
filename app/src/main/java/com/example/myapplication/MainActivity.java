@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             editJob.setText(getIntent().getStringExtra("job"));
             editWebsite.setText(getIntent().getStringExtra("website"));
             editPhone.setText(getIntent().getStringExtra("phone"));
-            btnMain.setText("שמור שינויים");
-            setTitle("עריכת כרטיס");
+            btnMain.setText(R.string.save_changes);
+            setTitle(getString(R.string.edit_card));
             }
 //        btnGo.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
             EditText editJob = findViewById(R.id.etTitle);
             EditText editPhone = findViewById(R.id.etJob);
             EditText editWebsite = findViewById(R.id.etWebsite);
-            editName.setText("שלו לוי");
-            editJob.setText("מתכנת אנדרויד");
+            editName.setText(R.string.name_example2);
+            editJob.setText(R.string.role_example);
             editPhone.setText("054-7888321");
             editWebsite.setText("indeed.com");
         }
@@ -148,11 +148,11 @@ public class MainActivity extends AppCompatActivity {
         String site  = editWebsite.getText().toString().trim();
 
         if (name.isEmpty()) {
-            Toast.makeText(this, "חובה למלא שם", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.must_fill_name, Toast.LENGTH_SHORT).show();
             return;
         }
         if (!FirebaseConfig.isConfigured()) {
-            Toast.makeText(this, "חסרים ערכים ב-FirebaseConfig.java", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.firebaseconfig_java), Toast.LENGTH_LONG).show();
             return;
         }
 

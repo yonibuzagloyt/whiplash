@@ -58,7 +58,7 @@
             android:id="@+id/etJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/phonenumber_example"
+            android:hint="067-676867"
             android:inputType="phone"
             android:maxLines="1"
             android:minHeight="48dp" />
@@ -73,7 +73,7 @@
             android:id="@+id/etWebsite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/website_example"
+            android:hint="idk.com"
             android:inputType="textUri"
             android:maxLines="1"
             android:minHeight="48dp" />
