@@ -10,7 +10,7 @@
     <string name="n_18_10_26_n">נכתב על ידי יוני בוזגלו\nלעבודה בית עד 18.10.26\nכיתה יב · אורט טבעון</string>
     <string name="about_title">כרטיס ביקור</string>
     <string name="error_firebase">נוצרה שגיאה בזמן שמירה לפיירביס.\n</string>
-    <string name="success_firebase">נשמר בהצלחה!</string>
+    <string name="success_firebase">הכרטיס נשמר בהצלחה!</string>
     <string name="create_a_card">צור כרטיס!!</string>
     <string name="website_title">אתר:</string>
     <string name="phone_title">טלפון:</string>
@@ -41,4 +41,5 @@
     <string name="edit_card">עריכת כרטיס</string>
     <string name="name_example2">שלו לוי</string>
     <string name="role_example">מתכנת אנדרויד</string>
+    <string name="card_s"> הכרטיס של</string>
 </resources>

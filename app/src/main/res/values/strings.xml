@@ -12,7 +12,7 @@
     ort tivon 12th grade</string>
     <string name="about_title">Business card</string>
     <string name="error_firebase">an error occurred while trying to save to firebase.\n</string>
-    <string name="success_firebase">successfully saved to firebase!</string>
+    <string name="success_firebase">successfully saved card!</string>
     <string name="create_a_card">create card!</string>
     <string name="website_title">website:</string>
     <string name="phone_title">phone number:</string>
@@ -43,4 +43,5 @@
     <string name="edit_card">Edit Card…</string>
     <string name="name_example2">Gordon Ramsey</string>
     <string name="role_example">Chef</string>
+    <string name="card_s"> card\'s</string>
 </resources>

@@ -17,13 +17,29 @@ import com.google.firebase.database.DatabaseReference;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public static final String KEY_NAME = "name";
     public static final String KEY_JOB = "job";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_WEBSITE = "website";
-
+    public  static final String CHANNEL_ID   = "cards_channel";   // מזהה הערוץ. פנימי, המשתמש לא רואה אותו
+    private static final int    PERM_REQUEST = 1001;              // מזהה בקשת ההרשאה
     // null = כרטיס חדש. אם יש כאן מפתח = עורכים כרטיס קיים
     private String editKey = null;
     public EditText editName;
@@ -31,6 +47,89 @@ public class MainActivity extends AppCompatActivity {
     public EditText editPhone;
     public EditText editWebsite;
     public Button btnMain;
+    public Random random = new Random();
+    public int RequestCode;
+    int NOTIF_ID;
+    // שלב 1: יוצרת את ערוץ ההתראות. קוראים לה פעם אחת, בפתיחת האפליקציה
+    private void createNotificationChannel() {
+        // ערוצים קיימים רק מאנדרואיד 8. במכשיר ישן יותר אין מה ליצור
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,                                 // מזהה פנימי
+
+                    getString(R.string.about_title),                             // השם שהמשתמש רואה בהגדרות
+                    NotificationManager.IMPORTANCE_DEFAULT);     // רמת חשיבות
+
+            channel.setDescription("התראות של אפליקציית ההדגמה");
+
+            NotificationManager nm = getSystemService(NotificationManager.class);
+            nm.createNotificationChannel(channel);   // יצירה חוזרת אינה מזיקה
+        }
+    }
+    private void askNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {   // API 33
+
+
+            boolean granted = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
+
+
+            if (!granted) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1001);
+            }
+        }
+    }
+    // שלב 3: שולחת התראה על כרטיס שנשמר זה עתה בענן
+    private void notifyCardSaved(Card c) {
+        RequestCode = random.nextInt(100);
+        NOTIF_ID = random.nextInt(100);
+        Intent intent = new Intent(this, CardActivity.class);
+        intent.putExtra("key", c.getKey());
+        intent.putExtra("name", c.getName());
+        intent.putExtra("job", c.getJob());
+        intent.putExtra("phone", c.getPhone());
+        intent.putExtra("website", c.getSite());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        // ② PendingIntent — הרשאה למערכת להפעיל את ה-Intent הזה בשמנו
+
+        PendingIntent pi = PendingIntent.getActivity(
+
+                this,                       // הקשר
+
+                RequestCode,                          // requestCode — מבדיל בין PendingIntent-ים
+                intent,                     // ה-Intent שיופעל
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(android.R.drawable.ic_dialog_email)   // חובה!
+                        .setContentTitle(getString(R.string.success_firebase))
+                        .setContentText(c.getName() +" "+ getString(R.string.card_s))
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText("זו התראה מלאה. לחיצה עליה מפעילה PendingIntent "
+                                        + "שפותח את DetailsActivity ומעביר אליו נתונים."))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)   // לתאימות לפני API 26
+                        .setContentIntent(pi)
+                        .setAutoCancel(true);      // ההתראה נעלמת אחרי הלחיצה
+
+        // בלי הרשאה ההתראה לא תוצג, ובלי שום שגיאה. לכן בודקים ומודיעים בעצמנו
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "אין הרשאה להצגת התראות", Toast.LENGTH_LONG).show();
+            return;
+        }
+        NotificationManagerCompat nm = NotificationManagerCompat.from(this);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            nm.notify(NOTIF_ID, builder.build());
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             editPhone.setText(getIntent().getStringExtra("phone"));
             btnMain.setText(R.string.save_changes);
             setTitle(getString(R.string.edit_card));
-            }
+        }
 //        btnGo.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -62,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
+        // שתי שורות חדשות, בסוף המתודה
+        createNotificationChannel();     // שלב 1: הערוץ נוצר
+        askNotificationPermission();     // שלב 2: הדיאלוג קופץ
         btnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onSuccess(Void unused) {
                             Toast.makeText(MainActivity.this, getString(R.string.success_firebase), Toast.LENGTH_SHORT).show();
                             clearForm();
+                            notifyCardSaved(card);
                             openCard(card);
                         }
                     })
