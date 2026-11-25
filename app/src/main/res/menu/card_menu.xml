@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/btnBack"
+    android:title="@string/back_button"
+    android:icon="@drawable/abc_ic_ab_back_material"
+    app:showAsAction="always"/>
+    <item android:id="@+id/btnWeb"
+        android:title="@string/openweb_button"
+        app:showAsAction="never"/>
+    <item android:id="@+id/btnCall"
+        android:title="@string/call_button"
+        app:showAsAction="always"/>
+    <item android:id="@+id/btnShare"
+        android:title="@string/share_button"
+        android:icon="@android:drawable/ic_menu_share"
+        app:showAsAction="always"/>
+
     <item android:id="@+id/action_edit"
         android:title="@string/edit"
         app:showAsAction="never" />

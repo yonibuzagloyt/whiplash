@@ -38,13 +38,119 @@ public class CardActivity extends AppCompatActivity {
         tvJob.setHint(job);
         TextView tvOther = findViewById(R.id.tvOther);
         tvOther.setText(getString(R.string.phone_title) + " " + phone + "\n" + website);
-        Button btnCall = findViewById(R.id.btnCall);
-        Button btnWeb = findViewById(R.id.btnWeb);
-        Button btnShare = findViewById(R.id.btnShare);
-        Button btnBack = findViewById(R.id.btnBack);
-        btnCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        Button btnCall = findViewById(R.id.btnCall);
+//        Button btnWeb = findViewById(R.id.btnWeb);
+//        Button btnShare = findViewById(R.id.btnShare);
+//          Button btnBack = findViewById(R.id.btnBack);
+//        btnCall.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try
+//                {
+//                    if (phone == null)
+//                    {
+//                        Toast.makeText(CardActivity.this, getString(R.string.phone_error), Toast.LENGTH_SHORT).show();
+//                    }
+//                    else
+//                    {
+//                        if (phone.isBlank())
+//                        {
+//                            Toast.makeText(CardActivity.this, getString(R.string.phone_error), Toast.LENGTH_SHORT).show();
+//                        }
+//                        else
+//                        {
+//                            Intent dial = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+//                            startActivity(dial);
+//                        }
+//                    }
+//                }
+//                catch (Exception ActivityNotFoundException)
+//                {
+//                    Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
+//                    return;                         // לא עוברים מסך
+//                }
+//            }
+//        });
+//        btnWeb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try
+//                {
+//                    if (website != null) {
+//                        if (website.isBlank())
+//                        {
+//                            Toast.makeText(CardActivity.this, getString(R.string.web_error), Toast.LENGTH_SHORT).show();
+//                        }
+//                        else
+//                        {
+//                            if (!website.startsWith("http")) {
+//                                Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse("https://" + website));
+//                                startActivity(web);
+//                            } else {
+//                                Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
+//                                startActivity(web);
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText(CardActivity.this, getString(R.string.web_error), Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                catch (Exception ActivityNotFoundException)
+//                {
+//                    Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
+//                    return;                         // לא עוברים מסך
+//                }
+//            }
+//        });
+//        btnShare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try
+//                {
+//                    Intent share = new Intent(Intent.ACTION_SEND);
+//                    share.setType("text/plain");
+//                    share.putExtra(Intent.EXTRA_TEXT, name + "\n" + job + "\n" + phone + "\n" + website);
+//                    startActivity(Intent.createChooser(share, getString(R.string.share_with)));
+//                }
+//                catch (Exception ActivityNotFoundException)
+//                {
+//                    Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
+//                    return;                         // לא עוברים מסך
+//                }
+//            }
+//        });
+//        btnBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();   // ★ סוגר את המסך הזה וחוזר לקודם — בדיוק כמו כפתור Back
+//            }
+//        });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // טוענים את פריטי התפריט מתוך קובץ XML.
+        getMenuInflater().inflate(R.menu.card_menu, menu);
+
+        // מציינים שרוצים להציג את התפריט.
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_edit) {
+            Intent edit = new Intent(this, MainActivity.class);
+            edit.putExtra("key", key);
+            edit.putExtra("name", name);
+            edit.putExtra("website", website);
+            edit.putExtra("phone", phone);
+            edit.putExtra("job", job);
+            startActivity(edit);
+            finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.btnCall) {
                 try
                 {
                     if (phone == null)
@@ -67,13 +173,10 @@ public class CardActivity extends AppCompatActivity {
                 catch (Exception ActivityNotFoundException)
                 {
                     Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
-                    return;                         // לא עוברים מסך
                 }
-            }
-        });
-        btnWeb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            return true;
+        }
+        if (item.getItemId() == R.id.btnWeb) {
                 try
                 {
                     if (website != null) {
@@ -100,13 +203,10 @@ public class CardActivity extends AppCompatActivity {
                 catch (Exception ActivityNotFoundException)
                 {
                     Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
-                    return;                         // לא עוברים מסך
                 }
             }
-        });
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (item.getItemId() == R.id.btnShare)
+        {
                 try
                 {
                     Intent share = new Intent(Intent.ACTION_SEND);
@@ -117,38 +217,11 @@ public class CardActivity extends AppCompatActivity {
                 catch (Exception ActivityNotFoundException)
                 {
                     Toast.makeText(CardActivity.this, getString(R.string.no_right_app), Toast.LENGTH_SHORT).show();
-                    return;                         // לא עוברים מסך
                 }
-            }
-        });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();   // ★ סוגר את המסך הזה וחוזר לקודם — בדיוק כמו כפתור Back
-            }
-        });
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // טוענים את פריטי התפריט מתוך קובץ XML.
-        getMenuInflater().inflate(R.menu.card_menu, menu);
-
-        // מציינים שרוצים להציג את התפריט.
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_edit) {
-            Intent edit = new Intent(this, MainActivity.class);
-            edit.putExtra("key", key);
-            edit.putExtra("name", name);
-            edit.putExtra("website", website);
-            edit.putExtra("phone", phone);
-            edit.putExtra("job", job);
-            startActivity(edit);
-            finish();
-            return true;
+        }
+        if (item.getItemId() == R.id.btnBack)
+        {
+            finish();   // ★ סוגר את המסך הזה וחוזר לקודם — בדיוק כמו כפתור Back
         }
         // פריט אחר: מאפשרים ל-Android לטפל בו.
         return super.onOptionsItemSelected(item);
